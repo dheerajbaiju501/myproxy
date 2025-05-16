@@ -1,4 +1,9 @@
 import os, sys
+
+# Add the parent directory to the Python path so modules can be found
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)  # Insert at beginning to prioritize this path
+
 # online package
 import torch
 # optimizer
