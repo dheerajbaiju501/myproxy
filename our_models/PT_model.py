@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from pointnet2_ops import pointnet2_utils
+from utils.pointnet2_ops_lib.pointnet2_ops import pointnet2_utils
 from extensions.chamfer_dist import ChamferDistanceL1
 from our_models.model_Transformer import PCTransformer
 from our_models.build import MODELS

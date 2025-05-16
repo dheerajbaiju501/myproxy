@@ -3,7 +3,7 @@ from typing import List, Optional, Tuple
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from pointnet2_ops import pointnet2_utils
+from utils.pointnet2_ops_lib.pointnet2_ops import pointnet2_utils
 
 
 def build_shared_mlp(mlp_spec: List[int], bn: bool = True):
