@@ -1,2 +1,2 @@
-from .runner_model import run_net
-from .runner_model import test_net
+from .runner import run_net
+from .runner import test_net

@@ -1,6 +1,6 @@
 import sys
 from time import sleep
-
+import pdb
 sys.path.append(".")
 
 import os
@@ -15,29 +15,11 @@ from torch.utils.data import DataLoader
 
 id2cat = {
             # seen categories
-            "02691156": "airplane",  # plane
-            "02933112": "cabinet",  # dresser
-            "02958343": "car",
-            "03001627": "chair",
-            "03636649": "lamp",
-            "04256520": "sofa",
-            "04379243": "table",
-            "04530566": "vessel",  # boat
-            # alis for some seen categories
-            "04530566": "boat",  # vessel
-            "04256520": "couch",  # sofa
-            "02933112": "dresser",  # cabinet
-            "02691156": "airplane",  # airplane
-            "04530566": "watercraft",  # boat
-            # unseen categories
-            "02924116": "bus",
-            "02818832": "bed",
-            "02871439": "bookshelf",
-            "02828884": "bench",
-            "03467517": "guitar",
-            "03790512": "motorbike",
-            "04225987": "skateboard",
-            "03948459": "pistol",
+            "Chinese": "Chinese",
+            "Dutch": "Dutch",
+            "Hungarian": "Hungarian",
+            "SNCF": "SNCF"
+            
         }
 
 class ShapeNet(data.Dataset):
@@ -52,29 +34,11 @@ class ShapeNet(data.Dataset):
 
         self.cat2id = {
             # seen categories
-            "airplane": "02691156",  # plane
-            "cabinet": "02933112",  # dresser
-            "car": "02958343",
-            "chair": "03001627",
-            "lamp": "03636649",
-            "sofa": "04256520",
-            "table": "04379243",
-            "vessel": "04530566",  # boat
-            # alis for some seen categories
-            "boat": "04530566",  # vessel
-            "couch": "04256520",  # sofa
-            "dresser": "02933112",  # cabinet
-            "airplane": "02691156",  # airplane
-            "watercraft": "04530566",  # boat
-            # unseen categories
-            "bus": "02924116",
-            "bed": "02818832",
-            "bookshelf": "02871439",
-            "bench": "02828884",
-            "guitar": "03467517",
-            "motorbike": "03790512",
-            "skateboard": "04225987",
-            "pistol": "03948459",
+            "Chinese": "Chinese",
+            "Dutch": "Dutch",
+            "Hungarian": "Hungarian",
+            "SNCF": "SNCF"
+            
         }
 
         # self.id2cat = {cat_id: cat for cat, cat_id in self.cat2id.items()}
@@ -87,7 +51,7 @@ class ShapeNet(data.Dataset):
 
     def __getitem__(self, index):
         if self.split == "train":
-            partial_path = self.partial_paths[index].format(random.randint(0, 7))
+            partial_path = self.partial_paths[index].format(random.randint(1, 210))
         else:
             partial_path = self.partial_paths[index]
 
@@ -100,19 +64,22 @@ class ShapeNet(data.Dataset):
         partial_pc = self.read_point_cloud(partial_path)
         complete_pc = self.read_point_cloud(complete_path)
         #complete_pc = self.random_sample(self.read_point_cloud(complete_path), 16384)
-
-        category_name = id2cat[str(self.partial_paths[index].split('/')[5])]
+        # pdb.set_trace()
+        # print(self.partial_paths[index])
+        # print(self.partial_paths[index].split('/')[6])
+        # exit(0)
+        category_name = id2cat[str(self.partial_paths[index].split('/')[6])]
         a1 = self.read_point_cloud(partial_path)
-        print("partial: ", a1.shape)
+        # print("partial: ", a1.shape)
         a2 = self.read_point_cloud(complete_path)
-        print("complete: ", a2.shape)
+        # print("complete: ", a2.shape)
         a1_rows = a1.view([('', a1.dtype)] * a1.shape[1])
         a2_rows = a2.view([('', a2.dtype)] * a2.shape[1])
         # print(original_c.shape)
         # print(original_p.shape)
         missing_part = np.setdiff1d(a2_rows, a1_rows).view(a2.dtype).reshape(-1, a2.shape[1])
-        print("missing_part: ", missing_part.shape)
-        sleep(10)
+        # print("missing_part: ", missing_part.shape)
+        # sleep(10)
 
         return torch.from_numpy(partial_pc), torch.from_numpy(complete_pc), category_name
 

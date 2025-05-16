@@ -1,0 +1,8 @@
+# ninja log v5
+0	15919	1729865265303417767	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/gridding/build/temp.linux-x86_64-cpython-38/gridding_cuda.o	91c8fa05921ff498
+0	34777	1729865284151417105	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/gridding/build/temp.linux-x86_64-cpython-38/gridding.o	f3032e9ad9409482
+1	35761	1729865285139417071	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/gridding/build/temp.linux-x86_64-cpython-38/gridding_reverse.o	489e687021055427
+6	14870	1729867379883343511	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/gridding/build/temp.linux-x86_64-cpython-38/gridding_cuda.o	91c8fa05921ff498
+669	21631	1747059321754330540	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/gridding/build/temp.linux-x86_64-cpython-38/gridding_cuda.o	cc6f64dc7f1a48c7
+669	46299	1747059346418329138	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/gridding/build/temp.linux-x86_64-cpython-38/gridding.o	aed282d7ca908703
+670	48823	1747059348946328994	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/gridding/build/temp.linux-x86_64-cpython-38/gridding_reverse.o	14a1663f01b524eb

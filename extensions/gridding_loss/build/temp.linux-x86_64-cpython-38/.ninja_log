@@ -1,0 +1,6 @@
+# ninja log v5
+1	15161	1729865311323416151	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/gridding_loss/build/temp.linux-x86_64-cpython-38/gridding_distance_cuda.o	8b9733b597ba0f4e
+0	34780	1729865330931415463	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/gridding_loss/build/temp.linux-x86_64-cpython-38/gridding_distance.o	f7885b460a47f957
+6	14886	1729867405511342611	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/gridding_loss/build/temp.linux-x86_64-cpython-38/gridding_distance_cuda.o	8b9733b597ba0f4e
+461	21237	1747059405682325766	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/gridding_loss/build/temp.linux-x86_64-cpython-38/gridding_distance_cuda.o	f71047255d911477
+461	45153	1747059429590324406	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/gridding_loss/build/temp.linux-x86_64-cpython-38/gridding_distance.o	f5cb9a1f906fc47d

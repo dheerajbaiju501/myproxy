@@ -1,0 +1,8 @@
+# ninja log v5
+0	14226	1729863319063486112	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/chamfer_dist/build/temp.linux-x86_64-cpython-38/chamfer_cuda.o	532ad75544a761aa
+0	29791	1729863334619485566	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/chamfer_dist/build/temp.linux-x86_64-cpython-38/chamfer.o	b16ff4bf30ab4755
+6	15384	1729865155999421606	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/chamfer_dist/build/temp.linux-x86_64-cpython-38/chamfer_cuda.o	892e1b5a595d930d
+5	34851	1729865175455420922	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/chamfer_dist/build/temp.linux-x86_64-cpython-38/chamfer.o	4e7e1e92a90579a1
+14	14820	1729867325023345438	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/chamfer_dist/build/temp.linux-x86_64-cpython-38/chamfer_cuda.o	892e1b5a595d930d
+401	33418	1747059106522342784	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/chamfer_dist/build/temp.linux-x86_64-cpython-38/chamfer_cuda.o	2c158473f6e2fc19
+401	59335	1747059132434341310	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/chamfer_dist/build/temp.linux-x86_64-cpython-38/chamfer.o	7bb20cf8e9c4eba1

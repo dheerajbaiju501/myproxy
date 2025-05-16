@@ -4,8 +4,8 @@ import torch
 # optimizer
 import torch.optim as optim
 # dataloader
-from datasets import build_dataset_from_cfg
-from models import build_model_from_cfg
+from datasets.build import build_dataset_from_cfg
+from our_models.build import build_model_from_cfg
 # utils
 from utils.logger import *
 from utils.misc import *

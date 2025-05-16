@@ -1,0 +1,7 @@
+NAME: PCN
+CATEGORY_FILE_PATH: ../PCN-PyTorch/catenary/difficult/Catenary.json
+N_POINTS: 4096
+N_RENDERINGS: 210
+PARTIAL_POINTS_PATH: ../PCN-PyTorch/catenay/difficult_ply/%s/partial/%s/%s/%02d.pcd
+COMPLETE_POINTS_PATH: ../PCN-PyTorch/catenay/difficult_ply/%s/complete/%s/%s.pcd
+CARS: FALSE

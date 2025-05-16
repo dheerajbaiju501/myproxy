@@ -1,0 +1,6 @@
+# ninja log v5
+1	14892	1729865222355419276	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/cubic_feature_sampling/build/temp.linux-x86_64-cpython-38/cubic_feature_sampling_cuda.o	6133a3c3f0764aa6
+1	32614	1729865240067418654	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/cubic_feature_sampling/build/temp.linux-x86_64-cpython-38/cubic_feature_sampling.o	d830454694b0db3e
+14	14698	1729867354215344412	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/stuti/code-stuti/ProxyFormer/extensions/cubic_feature_sampling/build/temp.linux-x86_64-cpython-38/cubic_feature_sampling_cuda.o	6133a3c3f0764aa6
+552	22439	1747059228254335859	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/cubic_feature_sampling/build/temp.linux-x86_64-cpython-38/cubic_feature_sampling_cuda.o	29ee081da46658e5
+552	42479	1747059248286334720	/home/scratch/prashant/martini-scratch2/temp/scratch2/prashant/completion/completion/ProxyFormer/extensions/cubic_feature_sampling/build/temp.linux-x86_64-cpython-38/cubic_feature_sampling.o	3474e5a54d18a1a7

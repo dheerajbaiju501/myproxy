@@ -14,8 +14,8 @@ from utils import pc_util
 from utils.other_utils import write_ply
 from extensions.chamfer_dist import ChamferDistanceL1, ChamferDistanceL2
 import matplotlib.pyplot as plt
-from pytorch3d.ops import estimate_pointcloud_normals
-from pytorch3d.ops.knn import _KNN, knn_gather, knn_points
+# from pytorch3d.ops import estimate_pointcloud_normals
+# from pytorch3d.ops.knn import _KNN, knn_gather, knn_points
 from torchstat import stat
 from PIL import Image
 from pyntcloud import PyntCloud
@@ -33,30 +33,30 @@ def save_pc(pc, filename, path):
     cloud = PyntCloud(points)
     cloud.to_file(os.path.join(path, filename))
 
-def get_missing_part(pcl, pcl_input):
-    B = pcl.size(0)
-    λ = 0.8
-    ε = 1e-2
-    pcl_input_normals = estimate_pointcloud_normals(pcl_input)  # (1, n, 3)
+# def get_missing_part(pcl, pcl_input):
+#     B = pcl.size(0)
+#     λ = 0.8
+#     ε = 1e-2
+#     pcl_input_normals = estimate_pointcloud_normals(pcl_input)  # (1, n, 3)
 
-    idx = knn_points(pcl, pcl_input, K=1).idx
-    nearest_points = knn_gather(pcl_input, idx) # (1, N, K=1, 3)
-    # print(nearest_points.shape)
-    nearest_points_normals = knn_gather(pcl_input_normals, idx) # (1, N, K=1, 3)
-    # print(nearest_points_normals.shape)
-    nearest_points, nearest_points_normals = nearest_points.squeeze(-2), nearest_points_normals.squeeze(-2) # (1, N, 3)
+#     idx = knn_points(pcl, pcl_input, K=1).idx
+#     nearest_points = knn_gather(pcl_input, idx) # (1, N, K=1, 3)
+#     # print(nearest_points.shape)
+#     nearest_points_normals = knn_gather(pcl_input_normals, idx) # (1, N, K=1, 3)
+#     # print(nearest_points_normals.shape)
+#     nearest_points, nearest_points_normals = nearest_points.squeeze(-2), nearest_points_normals.squeeze(-2) # (1, N, 3)
 
-    p2point_dist = ((pcl - nearest_points)**2).sum(dim=-1).sqrt()  # (1, N)
-    # print(p2point_dist.shape)
-    p2plane_dist = (((pcl - nearest_points) * nearest_points_normals)**2).sum(-1).sqrt()    # (1, N)
-    # print(p2plane_dist.shape)
+#     p2point_dist = ((pcl - nearest_points)**2).sum(dim=-1).sqrt()  # (1, N)
+#     # print(p2point_dist.shape)
+#     p2plane_dist = (((pcl - nearest_points) * nearest_points_normals)**2).sum(-1).sqrt()    # (1, N)
+#     # print(p2plane_dist.shape)
 
-    dist = λ * p2plane_dist + (1 - λ) * p2point_dist
+#     dist = λ * p2plane_dist + (1 - λ) * p2point_dist
 
-    pcl_input_dense = pcl[:, dist[0] <= ε, :]
-    pcl_missing_dense = pcl[:, dist[0] > ε, :]
-    # print(pcl_missing_dense.shape)
-    return pcl_input_dense, pcl_missing_dense
+#     pcl_input_dense = pcl[:, dist[0] <= ε, :]
+#     pcl_missing_dense = pcl[:, dist[0] > ε, :]
+#     # print(pcl_missing_dense.shape)
+#     return pcl_input_dense, pcl_missing_dense
 
 def plot_pcd_one_view(
     filename,

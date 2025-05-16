@@ -12,6 +12,7 @@ from extensions.chamfer_dist import ChamferDistanceL1, ChamferDistanceL2
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from datasets.PCN_Dataloader import ShapeNet
+import pdb
 
 TEST_DIR = "result/PCN/PT_model/valid"
 if not os.path.exists(TEST_DIR):
@@ -65,7 +66,7 @@ def run_net(args, config, train_writer=None, val_writer=None):
     logger = get_logger(args.log_name)
     # build dataset
 
-    train_dataset = ShapeNet("data/PCN", "train", "all")
+    train_dataset = ShapeNet("../PCN-PyTorch/catenary/difficult_ply/", "train", "all")
 
     train_data_loader = DataLoader(
             train_dataset,
@@ -75,7 +76,7 @@ def run_net(args, config, train_writer=None, val_writer=None):
             drop_last=True,
         )
 
-    val_dataset = ShapeNet("data/PCN", "valid", "all")
+    val_dataset = ShapeNet("../PCN-PyTorch/catenary/difficult_ply/", "test", "all")
     val_data_loader = DataLoader(
             val_dataset, batch_size=1, shuffle=False, num_workers=8,
         )
@@ -83,6 +84,7 @@ def run_net(args, config, train_writer=None, val_writer=None):
     # (train_sampler, train_dataloader), (_, test_dataloader) = builder.dataset_builder(args, config.dataset.train), \
     #                                                         builder.dataset_builder(args, config.dataset.val)
     # build model
+    # pdb.set_trace()
     base_model = builder.model_builder(config.model)
     if args.use_gpu:
         base_model.to(args.local_rank)
