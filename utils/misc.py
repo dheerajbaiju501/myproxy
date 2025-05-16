@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import os
 from collections import abc
-from pointnet2_ops import pointnet2_utils
+from utils.pointnet2_ops_lib.pointnet2_ops import pointnet2_utils
 import pandas as pd
 from pyntcloud import PyntCloud
 
