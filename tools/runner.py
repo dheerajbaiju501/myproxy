@@ -66,7 +66,7 @@ def run_net(args, config, train_writer=None, val_writer=None):
     logger = get_logger(args.log_name)
     # build dataset
 
-    train_dataset = ShapeNet("../PCN-PyTorch/catenary/difficult_ply/", "train", "all")
+    train_dataset = ShapeNet("/content/myproxy/difficult_ply/", "train", "all")
 
     train_data_loader = DataLoader(
             train_dataset,
@@ -76,7 +76,7 @@ def run_net(args, config, train_writer=None, val_writer=None):
             drop_last=True,
         )
 
-    val_dataset = ShapeNet("../PCN-PyTorch/catenary/difficult_ply/", "test", "all")
+    val_dataset = ShapeNet("/content/myproxy/difficult_ply/", "test", "all")
     val_data_loader = DataLoader(
             val_dataset, batch_size=1, shuffle=False, num_workers=8,
         )
