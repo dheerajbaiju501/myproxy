@@ -247,21 +247,63 @@ def seprate_point_cloud2(xyz, num_points, crop, fixed_points = None, padding_zer
 
 def get_ptcloud_img(ptcloud):
     fig = plt.figure(figsize=(8, 8))
-
-    x, z, y = ptcloud.transpose(1, 0)
-    ax = fig.gca(projection=Axes3D.name, adjustable='box')
+    
+    # Handle different point cloud shapes
+    if ptcloud.shape[1] != 3:
+        # If the point cloud doesn't have exactly 3 coordinates per point
+        if ptcloud.shape[0] == 3:
+            # If it might be transposed
+            ptcloud = ptcloud.transpose()
+        elif ptcloud.shape[1] > 3:
+            # If it has more than 3 values per point, take the first 3
+            ptcloud = ptcloud[:, :3]
+        else:
+            # If it has fewer than 3 values per point, pad with zeros
+            padded = np.zeros((ptcloud.shape[0], 3))
+            padded[:, :ptcloud.shape[1]] = ptcloud
+            ptcloud = padded
+            
+    # Now ptcloud should be Nx3
+    x, y, z = ptcloud[:, 0], ptcloud[:, 1], ptcloud[:, 2]
+    # Fix for newer Matplotlib versions
+    try:
+        # Older Matplotlib versions
+        ax = fig.gca(projection=Axes3D.name, adjustable='box')
+    except TypeError:
+        # Newer Matplotlib versions
+        ax = fig.add_subplot(111, projection='3d')
+        
     ax.axis('off')
     # ax.axis('scaled')
     ax.view_init(30, 45)
-    max, min = np.max(ptcloud), np.min(ptcloud)
-    ax.set_xbound(min, max)
-    ax.set_ybound(min, max)
-    ax.set_zbound(min, max)
+    # Calculate min/max across all coordinates
+    max_val = max(np.max(x), np.max(y), np.max(z))
+    min_val = min(np.min(x), np.min(y), np.min(z))
+    # Set the bounds using our new min_val/max_val variables
+    ax.set_xbound(min_val, max_val)
+    ax.set_ybound(min_val, max_val)
+    ax.set_zbound(min_val, max_val)
+    # Use the new x, y, z variables for plotting
     ax.scatter(x, y, z, zdir='z', c=x, cmap='jet')
 
     fig.canvas.draw()
-    img = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-    img = img.reshape(fig.canvas.get_width_height()[::-1] + (3, ))
+    # Handle different Matplotlib versions
+    try:
+        # For newer Matplotlib versions
+        img = np.frombuffer(fig.canvas.buffer_rgba(), dtype=np.uint8)
+        # Convert RGBA to RGB
+        img = img.reshape(fig.canvas.get_width_height()[::-1] + (4, ))[:,:,:3]
+    except (AttributeError, TypeError):
+        try:
+            # Alternative for other versions
+            img = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
+            img = img.reshape(fig.canvas.get_width_height()[::-1] + (3, ))
+        except AttributeError:
+            # Fall back to argb if rgb is not available
+            img = np.frombuffer(fig.canvas.tostring_argb(), dtype=np.uint8)
+            img = img.reshape(fig.canvas.get_width_height()[::-1] + (4, ))
+            # ARGB to RGB conversion
+            img = img[:, :, 1:4]
     return img
 
 

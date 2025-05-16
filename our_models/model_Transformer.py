@@ -264,7 +264,8 @@ class PCTransformer(nn.Module):
             # random generate missing part's position embedding B M(896) C(384)
             random_pos_embedding = torch.randn([bs, num_pre_proxy, feature_dim]).cuda()
             # pdb.set_trace()
-            missing_feature = F.pad(missing_feature, (0, 6))
+            padding_size = feature_dim - missing_feature.size(-1)
+            missing_feature = F.pad(missing_feature, (0, padding_size))
             x = x + pos
             y = missing_feature + random_pos_embedding
 
