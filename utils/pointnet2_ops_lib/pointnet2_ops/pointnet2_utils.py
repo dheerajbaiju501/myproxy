@@ -20,15 +20,26 @@ except ImportError:
     )
     _ext_headers = glob.glob(osp.join(_ext_src_root, "include", "*"))
 
-    # Use only newer CUDA architectures compatible with Colab GPUs
+    # Force CUDA architecture settings for compatibility with Colab GPUs
     os.environ["TORCH_CUDA_ARCH_LIST"] = "7.0;7.5"
+    
+    # Make sure this is set before any CUDA operations
+    torch.backends.cudnn.benchmark = True
+    
     _ext = load(
         "_ext",
         sources=_ext_sources,
         extra_include_paths=[osp.join(_ext_src_root, "include")],
         extra_cflags=["-O3"],
-        extra_cuda_cflags=["-O3", "-Xfatbin", "-compress-all"],
+        extra_cuda_cflags=[
+            "-O3", 
+            "-Xfatbin", 
+            "-compress-all",
+            "-gencode=arch=compute_70,code=sm_70",
+            "-gencode=arch=compute_75,code=sm_75"
+        ],
         with_cuda=True,
+        verbose=True
     )
 
 

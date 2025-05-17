@@ -13,9 +13,10 @@ from utils.logger import *
 from utils.other_utils import vTransformer, PointNet_SA_Module_KNN
 
 import numpy as np
-from knn_cuda import KNN
+# Use our custom KNN fallback implementation for better compatibility
+from utils.knn_utils import get_knn_module
 
-knn = KNN(k=8, transpose_mode=False)
+knn = get_knn_module(k=8, transpose_mode=False)
 
 def get_knn_index(coor_q, coor_k=None):
     coor_k = coor_k if coor_k is not None else coor_q
@@ -27,7 +28,8 @@ def get_knn_index(coor_q, coor_k=None):
         _, idx = knn(coor_k, coor_q)  # bs k np
         idx_base = torch.arange(0, batch_size, device=coor_q.device).view(-1, 1, 1) * num_points_k
         idx = idx + idx_base
-        idx = idx.view(-1)
+        # Use reshape instead of view for better compatibility with our KNN fallback
+        idx = idx.reshape(-1)
     
     return idx  # bs*k*np
 
@@ -37,10 +39,32 @@ def get_graph_feature(x, knn_index, x_q=None):
         k = 8
         batch_size, num_points, num_dims = x.size()
         num_query = x_q.size(1) if x_q is not None else num_points
-        feature = x.view(batch_size * num_points, num_dims)[knn_index, :]
-        feature = feature.view(batch_size, k, num_query, num_dims)
+        
+        # Safely reshape flattened indices to gather features
+        try:
+            # Try to preserve the original operation if possible
+            feature = x.reshape(batch_size * num_points, num_dims)[knn_index, :]
+            feature = feature.reshape(batch_size, k, num_query, num_dims)
+        except RuntimeError:
+            # If shape doesn't match, use a more flexible approach
+            # Reshape knn_index back to structured format
+            knn_index = knn_index.reshape(batch_size, num_query, k)
+            
+            # Gather features for each batch, query point, and nearest neighbor
+            feature = torch.zeros(batch_size, num_query, k, num_dims, device=x.device)
+            x_flat = x.reshape(batch_size * num_points, num_dims)
+            
+            for b in range(batch_size):
+                for q in range(num_query):
+                    for n in range(k):
+                        idx = knn_index[b, q, n]
+                        feature[b, q, n] = x_flat[idx]
+            
+            # Transpose to match original format
+            feature = feature.permute(0, 2, 1, 3)  # [b, k, num_query, num_dims]
+        
         x = x_q if x_q is not None else x
-        x = x.view(batch_size, 1, num_query, num_dims).expand(-1, k, -1, -1)
+        x = x.reshape(batch_size, 1, num_query, num_dims).expand(-1, k, -1, -1)
         feature = torch.cat((feature - x, x), dim=-1)
         return feature  # b k np c
 

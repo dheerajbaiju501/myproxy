@@ -6,8 +6,9 @@ import torch.nn.functional as F
 from other_models.dgcnn_group import DGCNN_Grouper
 from utils.logger import *
 import numpy as np
-from knn_cuda import KNN
-knn = KNN(k=8, transpose_mode=False)
+# Use our custom KNN fallback implementation for better compatibility
+from utils.knn_utils import get_knn_module
+knn = get_knn_module(k=8, transpose_mode=False)
 
 def get_knn_index(coor_q, coor_k=None):
     coor_k = coor_k if coor_k is not None else coor_q
@@ -19,7 +20,8 @@ def get_knn_index(coor_q, coor_k=None):
         _, idx = knn(coor_k, coor_q)  # bs k np
         idx_base = torch.arange(0, batch_size, device=coor_q.device).view(-1, 1, 1) * num_points_k
         idx = idx + idx_base
-        idx = idx.view(-1)
+        # Use reshape instead of view for better compatibility with our KNN fallback
+        idx = idx.reshape(-1)
     
     return idx  # bs*k*np
 

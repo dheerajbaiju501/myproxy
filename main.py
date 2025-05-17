@@ -8,9 +8,16 @@ import os
 import torch
 from tensorboardX import SummaryWriter
 
+# Import our custom fallback utilities
+from utils.fps_utils import patch_furthest_point_sample
+
 def main():
     # args
     args = parser.get_args()
+    
+    # Apply the FPS fallback patch to handle CUDA compatibility issues
+    patch_furthest_point_sample()
+    
     # CUDA
     args.use_gpu = torch.cuda.is_available()
     if args.use_gpu:
